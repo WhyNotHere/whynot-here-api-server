@@ -7,6 +7,7 @@ import handong.whynot.dto.alert.AlertResponseCode;
 import handong.whynot.dto.alert.SMSCodeCheckRequestDTO;
 import handong.whynot.dto.alert.SMSRequestDTO;
 import handong.whynot.exception.alert.InvalidCodeException;
+import handong.whynot.exception.alert.InvalidNumberLengthException;
 import handong.whynot.exception.alert.MatchCodeFailException;
 import handong.whynot.util.RandomUtil;
 import lombok.RequiredArgsConstructor;
@@ -44,6 +45,10 @@ public class AlertService {
 //      log.error(requestHost + "에서 문자 전송을 시도하고 있습니다.");
 //      throw new InvalidCodeException(AlertResponseCode.ALERT_INVALID_CODE);
 //    }
+    String targetNum = request.getPhoneNumber().replaceAll("-", "");
+    if (targetNum.length() != 11) {
+      throw new InvalidNumberLengthException(AlertResponseCode.ALERT_INVALID_NUMBER_LENGTH);
+    }
 
     String code = RandomUtil.generateRandomNumber(6);
     String message = String.format(ACCOUNT_VERIFY_MESSAGE, code);
@@ -51,7 +56,7 @@ public class AlertService {
 
     Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
     Message sendMessage = Message.creator(
-      new com.twilio.type.PhoneNumber("+82" + request.getPhoneNumber().replaceAll("-", "")),
+      new com.twilio.type.PhoneNumber("+82" + targetNum),
       new com.twilio.type.PhoneNumber(SENDER_NUM),
       message).create();
 
