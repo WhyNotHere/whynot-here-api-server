@@ -34,7 +34,7 @@ public class AlertService {
   @Value("${sms.token.verifyHost}")
   public String VERIFY_HOST;
 
-  private String ACCOUNT_VERIFY_MESSAGE = "[WhyNotHere] 본인확인 인증번호(%s)를 입력해 주세요.";
+  private final String ACCOUNT_VERIFY_MESSAGE = "[WhyNotHere] 본인확인 인증번호(%s)를 입력해 주세요.";
 
   @Transactional
   public void sendSMS(String requestHost, Account account, SMSRequestDTO request) {
@@ -46,16 +46,16 @@ public class AlertService {
 //    }
 
     String code = RandomUtil.generateRandomNumber(6);
-    ACCOUNT_VERIFY_MESSAGE = String.format(ACCOUNT_VERIFY_MESSAGE, code);
+    String message = String.format(ACCOUNT_VERIFY_MESSAGE, code);
     account.generateSMSCode(code, request.getPhoneNumber());
 
     Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
-    Message message = Message.creator(
+    Message sendMessage = Message.creator(
       new com.twilio.type.PhoneNumber("+82" + request.getPhoneNumber().replaceAll("-", "")),
       new com.twilio.type.PhoneNumber(SENDER_NUM),
-      ACCOUNT_VERIFY_MESSAGE).create();
+      message).create();
 
-    account.setSmsSid(message.getSid());
+    account.setSmsSid(sendMessage.getSid());
   }
 
   @Transactional
