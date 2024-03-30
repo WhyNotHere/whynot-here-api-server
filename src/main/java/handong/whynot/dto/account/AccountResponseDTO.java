@@ -24,6 +24,7 @@ public class AccountResponseDTO {
     private List<String> roles;
     private boolean isAuthenticated;
     private String studentType;
+    private Boolean smsVerified;
 
     public static AccountResponseDTO of(Account account) {
         return builder()
@@ -34,6 +35,7 @@ public class AccountResponseDTO {
                 .authType(account.getAuthType())
                 .roles(account.getRoles().stream().map(Role::getCode).collect(Collectors.toList()))
                 .isAuthenticated(account.isAuthenticated())
+                .smsVerified(account.getSmsVerified())
                 .studentType(account.getStudentType())
                 .build();
     }
