@@ -80,6 +80,21 @@ public class Account {
     @Column(name = "student_type")
     private String studentType;
 
+    @Column(name = "sms_check_token")
+    private String smsCheckToken;
+
+    @Column(name = "sms_check_token_generated_at")
+    private LocalDateTime smsCheckTokenGeneratedAt;
+
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
+    @Column(name = "sms_sid")
+    private String smsSid;
+
+    @Column(name = "sms_verified")
+    private Boolean smsVerified;
+
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<AccountRole> userRoleList = new ArrayList<>();
@@ -143,5 +158,11 @@ public class Account {
         else if (roles.contains("ROLE_MANAGER")) return "외부 매니저";
         else if (roles.contains("ROLE_USER")) return "";
         else return "미인증";
+    }
+
+    public void generateSMSCode(String code, String phoneNumber) {
+        smsCheckToken = code;
+        emailCheckTokenGeneratedAt = LocalDateTime.now();
+        this.phoneNumber = phoneNumber;
     }
 }

@@ -7,6 +7,6 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SMSRequestDTO {
-  private String phoneNumber;
+public class SMSCodeCheckRequestDTO {
+  private String smsCode;
 }
