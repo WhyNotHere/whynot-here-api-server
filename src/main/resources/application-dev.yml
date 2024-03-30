@@ -162,3 +162,10 @@ mobile:
   push:
     keyPath: ${mobile.pushKeyPath}
     scope: ${mobile.pushScope}
+
+sms:
+  token:
+    accountId: ${sms.accountToken}
+    authId: ${sms.authToken}
+    senderNum: ${sms.senderNumber}
+    verifyHost: ${sms.verifyHost}

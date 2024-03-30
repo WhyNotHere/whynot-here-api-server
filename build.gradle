@@ -73,6 +73,9 @@ dependencies {
     // mobile
     implementation 'com.google.firebase:firebase-admin:9.1.1'
 
+    // sms
+    implementation group: 'com.twilio.sdk', name: 'twilio', version: '8.0.0'
+
     // test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
