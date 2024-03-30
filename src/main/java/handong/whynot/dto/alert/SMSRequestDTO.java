@@ -9,5 +9,4 @@ import lombok.*;
 @AllArgsConstructor
 public class SMSRequestDTO {
   private String phoneNumber;
-  private String message;
 }
