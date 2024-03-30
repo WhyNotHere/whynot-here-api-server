@@ -92,6 +92,9 @@ public class Account {
     @Column(name = "sms_sid")
     private String smsSid;
 
+    @Column(name = "sms_verified")
+    private Boolean smsVerified;
+
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<AccountRole> userRoleList = new ArrayList<>();

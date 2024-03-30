@@ -3,10 +3,15 @@ package handong.whynot.service;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import handong.whynot.domain.Account;
+import handong.whynot.dto.alert.AlertResponseCode;
+import handong.whynot.dto.alert.SMSCodeCheckRequestDTO;
 import handong.whynot.dto.alert.SMSRequestDTO;
+import handong.whynot.exception.alert.InvalidCodeException;
+import handong.whynot.exception.alert.MatchCodeFailException;
 import handong.whynot.util.RandomUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -51,5 +56,14 @@ public class AlertService {
       ACCOUNT_VERIFY_MESSAGE).create();
 
     account.setSmsSid(message.getSid());
+  }
+
+  @Transactional
+  public void checkSMSCode(Account account, SMSCodeCheckRequestDTO request) {
+    if (StringUtils.equals(account.getSmsCheckToken(), request.getSmsCode())) {
+      account.setSmsVerified(true);
+      return;
+    }
+    throw new MatchCodeFailException(AlertResponseCode.ALERT_MATCH_CODE_FAIL);
   }
 }
