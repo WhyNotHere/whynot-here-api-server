@@ -72,4 +72,11 @@ public class ChatService {
       .map(ChatMessageDTO::of)
       .collect(Collectors.toList());
   }
+
+  public String getChatNameBy(String name) {
+    ChatRoom chatRoom = roomRepository.findByName(name)
+      .orElseThrow(() -> new ChatRoomNotFoundException(ChatResponseCode.CHAT_ROOM_READ_FAIL));
+
+    return chatRoom.getHashcode();
+  }
 }

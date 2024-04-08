@@ -12,10 +12,7 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.HtmlUtils;
 
 import java.util.List;
@@ -41,5 +38,11 @@ public class ChatController {
   public List<ChatMessageDTO> getChatMessages(@RequestBody ChatRequestDTO request) {
     Account account = accountService.getCurrentAccount();
     return chatService.getChatMessages(account, request.getHashcode());
+  }
+
+  @Operation(summary = "채팅방 이름으로 채팅방 조회")
+  @GetMapping("/chat-rooms/{name}")
+  public String getChatNameBy(@PathVariable String name) {
+    return chatService.getChatNameBy(name);
   }
 }
