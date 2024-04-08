@@ -2,11 +2,13 @@ package handong.whynot.service;
 
 import handong.whynot.domain.Account;
 import handong.whynot.domain.ChatMessage;
+import handong.whynot.domain.ChatRoom;
 import handong.whynot.dto.account.AccountResponseCode;
 import handong.whynot.dto.chat.ChatInput;
 import handong.whynot.dto.chat.ChatMessageDTO;
 import handong.whynot.dto.chat.ChatResponseCode;
 import handong.whynot.exception.account.AccountNotFoundException;
+import handong.whynot.exception.chat.ChatRoomNotFoundException;
 import handong.whynot.exception.chat.InvalidParticipantException;
 import handong.whynot.exception.chat.InvalidTokenException;
 import handong.whynot.repository.*;
@@ -38,10 +40,13 @@ public class ChatService {
       throw new InvalidParticipantException(ChatResponseCode.CHAT_INVALID_PARTICIPANT);
     }
 
+    ChatRoom chatRoom = roomRepository.findByHashcode(topicName)
+      .orElseThrow(() -> new ChatRoomNotFoundException(ChatResponseCode.CHAT_ROOM_READ_FAIL));
+
     ChatMessage msg = ChatMessage.builder()
       .content(message.getContent())
       .account(account)
-      .hashcode(topicName)
+      .chatRoom(chatRoom)
       .build();
     messageRepository.save(msg);
   }
@@ -60,7 +65,10 @@ public class ChatService {
       throw new InvalidParticipantException(ChatResponseCode.CHAT_INVALID_PARTICIPANT);
     }
 
-    return messageRepository.findAllByHashcode(hashcode).stream()
+    ChatRoom chatRoom = roomRepository.findByHashcode(hashcode)
+      .orElseThrow(() -> new ChatRoomNotFoundException(ChatResponseCode.CHAT_ROOM_READ_FAIL));
+
+    return messageRepository.findAllByChatRoom(chatRoom).stream()
       .map(ChatMessageDTO::of)
       .collect(Collectors.toList());
   }

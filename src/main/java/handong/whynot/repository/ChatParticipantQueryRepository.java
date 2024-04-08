@@ -19,10 +19,10 @@ public class ChatParticipantQueryRepository {
     private final QAccount qAccount = QAccount.account;
     private final QChatParticipant qChatParticipant = QChatParticipant.chatParticipant;
 
-    public Map<Long, String> getIdNicknameMap(String hashcode) {
+    public Map<Long, String> getIdNicknameMap(Long chatRoomId) {
         List<Tuple> tuples = queryFactory.select(qAccount.id, qAccount.nickname)
           .from(qChatParticipant)
-          .where(qChatParticipant.hashcode.eq(hashcode))
+          .where(qChatParticipant.chatRoom.id.eq(chatRoomId))
           .fetch();
 
         Map<Long, String> resultMap = new HashMap<>();

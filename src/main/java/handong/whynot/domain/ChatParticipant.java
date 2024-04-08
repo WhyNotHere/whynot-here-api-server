@@ -18,8 +18,9 @@ public class ChatParticipant extends BaseTimeEntity {
   @Column(name = "id")
   private Long id;
 
-  @Column(name = "hashcode")
-  private String hashcode;
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "chat_room_id")
+  private ChatRoom chatRoom;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "account_id")
