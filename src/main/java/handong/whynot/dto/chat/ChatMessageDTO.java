@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.web.util.HtmlUtils;
 
 import java.time.LocalDateTime;
 
@@ -22,6 +23,7 @@ public class ChatMessageDTO {
 
   private String content;
   private String nickname;
+  private String profileImg;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_PATTERN, timezone = "Asia/Seoul")
   @JsonDeserialize(using = LocalDateTimeDeserializer.class)
@@ -32,14 +34,16 @@ public class ChatMessageDTO {
     return builder()
       .content(message.getContent())
       .nickname(message.getAccount().getNickname())
+      .profileImg(message.getAccount().getProfileImg())
       .createdDt(message.getCreatedDt())
       .build();
   }
 
-  public static ChatMessageDTO getRealTimeDTO(String content, String nickname) {
+  public static ChatMessageDTO getRealTimeDTO(ChatInput message) {
     return ChatMessageDTO.builder()
-      .content(content)
-      .nickname(nickname)
+      .content(HtmlUtils.htmlEscape(message.getContent()))
+      .nickname(HtmlUtils.htmlEscape(message.getNickname()))
+      .profileImg(HtmlUtils.htmlEscape(message.getProfileImg()))
       .createdDt(LocalDateTime.now())
       .build();
   }

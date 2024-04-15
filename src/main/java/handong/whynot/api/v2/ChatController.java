@@ -13,7 +13,6 @@ import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.HtmlUtils;
 
 import java.util.List;
 
@@ -30,7 +29,7 @@ public class ChatController {
   public ChatMessageDTO greeting(@DestinationVariable String topicName, ChatInput message, Message<String> processedMessage) {
     Long accountId = chatService.getAccountIdByMessage(processedMessage);
     chatService.chatMessage(accountId, topicName, message);
-    return ChatMessageDTO.getRealTimeDTO(HtmlUtils.htmlEscape(message.getContent()), HtmlUtils.htmlEscape(message.getNickname()));
+    return ChatMessageDTO.getRealTimeDTO(message);
   }
 
   @Operation(summary = "채팅방 메세지 전체 조회")
