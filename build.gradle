@@ -76,6 +76,9 @@ dependencies {
     // sms
     implementation group: 'com.twilio.sdk', name: 'twilio', version: '8.0.0'
 
+    // chat
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
     // test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
