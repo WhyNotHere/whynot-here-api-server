@@ -22,6 +22,9 @@ public class PhoneService {
     @Transactional
     public void syncPhones(Account account, PhonesRequestDTO request) {
 
+        // 기존 연락처 제거
+        phoneRepository.deleteAllByAccount(account);
+
         List<Phone> phones = new ArrayList<>();
         for (PhoneDTO phone : request.getPhones()) {
             phones.add(Phone.builder()

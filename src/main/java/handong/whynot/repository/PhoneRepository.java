@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface PhoneRepository extends JpaRepository<Phone, Long> {
     List<Phone> findByAccount(Account account);
+
+    void deleteAllByAccount(Account account);
 }

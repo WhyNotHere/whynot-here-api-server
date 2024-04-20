@@ -7,6 +7,7 @@ import handong.whynot.dto.phone.PhoneResponseCode;
 import handong.whynot.dto.phone.PhonesRequestDTO;
 import handong.whynot.service.AccountService;
 import handong.whynot.service.PhoneService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,7 @@ public class PhoneController {
     private final PhoneService phoneService;
     private final AccountService accountService;
 
+    @Operation(summary = "연락처 동기화")
     @PostMapping("/sync-phones")
     public ResponseDTO syncPhones(@RequestBody PhonesRequestDTO request) {
         Account account = accountService.getCurrentAccount();
@@ -27,6 +29,7 @@ public class PhoneController {
         return ResponseDTO.of(PhoneResponseCode.PHONE_CREATE_OK);
     }
 
+    @Operation(summary = "본인 연락처 조회")
     @GetMapping("")
     public List<PhoneDTO> getMyPhones() {
         Account account = accountService.getCurrentAccount();
