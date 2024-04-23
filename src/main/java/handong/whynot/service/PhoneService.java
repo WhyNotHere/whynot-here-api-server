@@ -42,4 +42,9 @@ public class PhoneService {
                 .map(PhoneDTO::of)
                 .collect(Collectors.toList());
     }
+
+    @Transactional
+    public void deleteMyPhones(Account account) {
+        phoneRepository.deleteAllByAccount(account);
+    }
 }

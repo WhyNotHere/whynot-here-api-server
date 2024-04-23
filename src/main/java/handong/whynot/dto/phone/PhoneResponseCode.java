@@ -8,7 +8,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum PhoneResponseCode implements ResponseCode {
 
-    PHONE_CREATE_OK(20001, "연락처 동기화에 성공하였습니다.");
+    PHONE_CREATE_OK(20001, "연락처 동기화에 성공하였습니다."),
+    PHONE_DELETE_OK(20002, "연락처 삭제에 성공하였습니다."),;
 
     private final Integer statusCode;
     private final String message;

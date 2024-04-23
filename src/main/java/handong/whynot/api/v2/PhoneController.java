@@ -35,4 +35,12 @@ public class PhoneController {
         Account account = accountService.getCurrentAccount();
         return phoneService.getMyPhones(account);
     }
+
+    @Operation(summary = "본인 연락처 내역 삭제")
+    @DeleteMapping("")
+    public ResponseDTO deleteMyPhones() {
+        Account account = accountService.getCurrentAccount();
+        phoneService.deleteMyPhones(account);
+        return ResponseDTO.of(PhoneResponseCode.PHONE_DELETE_OK);
+    }
 }
