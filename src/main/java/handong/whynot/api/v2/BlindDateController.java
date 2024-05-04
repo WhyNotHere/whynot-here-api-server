@@ -265,7 +265,7 @@ public class BlindDateController {
 
   @Operation(summary = "실시간 정보 조회")
   @GetMapping("/real-data")
-  public RealDataResponseDTO getRealData() {
-    return blindDateService.getRealData();
+  public RealDataResponseDTO getRealData(@RequestParam Integer season) {
+    return blindDateService.getRealData(season);
   }
 }

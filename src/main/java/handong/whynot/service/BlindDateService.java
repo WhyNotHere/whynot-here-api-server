@@ -3,6 +3,7 @@ package handong.whynot.service;
 import handong.whynot.domain.*;
 import handong.whynot.dto.admin.AdminBlindDateResponseDTO;
 import handong.whynot.dto.blind_date.*;
+import handong.whynot.dto.blind_date.enums.FaithEnum;
 import handong.whynot.dto.blind_date.enums.GBlindDateState;
 import handong.whynot.dto.friend_meeting.FriendMeetingResponseCode;
 import handong.whynot.exception.blind_date.*;
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static handong.whynot.dto.blind_date.enums.LocationEnum.getLocationEnum;
 
 @Service
 @RequiredArgsConstructor
@@ -692,21 +695,75 @@ public class BlindDateService {
     return comment.getDescription();
   }
 
-  public RealDataResponseDTO getRealData() {
+  public RealDataResponseDTO getRealData(Integer season) {
+
+    List<BlindDate> blindDateList = blindDateRepository.findAllBySeason(season).stream()
+            .filter(it -> Objects.nonNull(it.getIsSubmitted()) && it.getIsSubmitted())
+            .collect(Collectors.toList());
+    int maleCnt = 0, femaleCnt = 0, christianCnt = 0, noCnt = 0, etcCnt = 0;
+    Map<String, Integer> locationCntMap = new HashMap<>();
+
+    for (BlindDate blindDate : blindDateList) {
+      String gender = blindDate.getGender();
+      String faith = blindDate.getFaith();
+      String myLocation = blindDate.getMyLocation();
+
+      // 성별 통계 조회
+      if (StringUtils.equals(gender, "M")) {
+        maleCnt += 1;
+      } else {
+        femaleCnt += 1;
+      }
+
+      // 종교 통계 조회
+      if (StringUtils.equals(faith, FaithEnum.CHRISTIAN.toString())) {
+        christianCnt += 1;
+      } else if (StringUtils.equals(faith, FaithEnum.NOTHING.toString())) {
+        noCnt += 1;
+      } else {
+        etcCnt += 1;
+      }
+
+      // 지역 통계 조회
+      if (locationCntMap.containsKey(myLocation)) {
+        locationCntMap.put(myLocation, locationCntMap.get(myLocation) + 1);
+      } else {
+        locationCntMap.put(myLocation, 1);
+      }
+    }
+
     GenderData genderData = GenderData.builder()
-            .male("여 20")
-            .female("남 12")
+            .male(String.format("남 %d", maleCnt))
+            .female(String.format("여 %d", femaleCnt))
             .build();
 
     FaithData faithData = FaithData.builder()
-            .christian("기독교 20")
-            .no("무교 20")
-            .etc("그외 20")
+            .christian(String.format("기독교 %d", christianCnt))
+            .no(String.format("무교 %d", noCnt))
+            .etc(String.format("그외 %d", etcCnt))
             .build();
 
+    // 지역 순위 선정
+    List<Map.Entry<String, Integer>> sortedList = new ArrayList<>(locationCntMap.entrySet());
+    sortedList.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
+
+    // TopList
+    List<String> top3Keys = new ArrayList<>();
+    int loopCount = Math.min(3, sortedList.size()); // 리스트 크기와 3 중 작은 값을 반복 횟수로 설정
+    for (int i = 0; i < loopCount; i++) {
+      top3Keys.add(getLocationEnum(sortedList.get(i).getKey()).getDesc());
+    }
+
+    // FullList
+    List<String> fullKeys = new ArrayList<>();
+    for (int i = 0; i < sortedList.size(); i++) {
+      String desc = String.format("%s / %d명", getLocationEnum(sortedList.get(i).getKey()).getDesc(), sortedList.get(i).getValue());
+      fullKeys.add(desc);
+    }
+
     LocationData locationData = LocationData.builder()
-            .topList(List.of("서울", "경북", "포항"))
-            .fullList(List.of("서울 / 22명", "충청도 / 22명", "경남 / 22명", "포항 / 22명", "포항 / 22명", "포항 / 22명", "포항 / 22명","포항 / 22명", "포항 / 22명"))
+            .topList(top3Keys)
+            .fullList(fullKeys)
             .build();
 
     return RealDataResponseDTO.builder()
