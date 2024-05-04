@@ -684,4 +684,33 @@ public class BlindDateService {
       .kakaoLink(blindDate.getKakaoLink())
       .build();
   }
+
+  public String getNoticeComment() {
+
+    return "한대소 시작 10분 전";
+  }
+
+  public RealDataResponseDTO getRealData() {
+    GenderData genderData = GenderData.builder()
+            .male("여 20")
+            .female("남 12")
+            .build();
+
+    FaithData faithData = FaithData.builder()
+            .christian("기독교 20")
+            .no("무교 20")
+            .etc("그외 20")
+            .build();
+
+    LocationData locationData = LocationData.builder()
+            .topList(List.of("서울", "경북", "포항"))
+            .fullList(List.of("서울 / 22명", "충청도 / 22명", "경남 / 22명", "포항 / 22명", "포항 / 22명", "포항 / 22명", "포항 / 22명","포항 / 22명", "포항 / 22명"))
+            .build();
+
+    return RealDataResponseDTO.builder()
+            .gender(genderData)
+            .faith(faithData)
+            .location(locationData)
+            .build();
+  }
 }
