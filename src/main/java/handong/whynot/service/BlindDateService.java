@@ -32,6 +32,7 @@ public class BlindDateService {
   private final FriendMeetingRepository friendMeetingRepository;
   private final BlindDateMatchingHelperRepository blindDateMatchingHelperRepository;
   private final AccountQueryRepository accountQueryRepository;
+  private final NoticeCommentRepository noticeCommentRepository;
 
   @Transactional
   public void createBlindDate(Integer season, Account account) {
@@ -686,8 +687,9 @@ public class BlindDateService {
   }
 
   public String getNoticeComment() {
-
-    return "한대소 시작 10분 전";
+    NoticeComment comment = noticeCommentRepository.findFirstByOrderByIdDesc()
+            .orElseGet(() -> NoticeComment.builder().description("").build());
+    return comment.getDescription();
   }
 
   public RealDataResponseDTO getRealData() {
