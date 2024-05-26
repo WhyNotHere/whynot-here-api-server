@@ -82,6 +82,9 @@ public class BlindDate extends BaseTimeEntity {
   @Column(name = "my_age")
   private Integer myAge;
 
+  @Column(name = "my_age_str")
+  private String myAgeStr;
+
   @Column(name = "my_height")
   private Integer myHeight;
 
@@ -90,6 +93,9 @@ public class BlindDate extends BaseTimeEntity {
 
   @Column(name = "my_location")
   private String myLocation;
+
+  @Column(name = "my_location_sub")
+  private String myLocationSub;
 
   @Column(name = "my_location_desc")
   private String myLocationDesc;
@@ -145,6 +151,21 @@ public class BlindDate extends BaseTimeEntity {
   @Column(name = "my_job_desc")
   private String myJobDesc;
 
+  @Column(name = "holiday_type")
+  private String holidayType;
+
+  @Column(name = "conflict_solving")
+  private String conflictSolving;
+
+  @Column(name = "my_dream_goal")
+  private String myDreamGoal;
+
+  @Column(name = "my_preference")
+  private String myPreference;
+
+  @Column(name = "love_view")
+  private String loveView;
+
   // =========== 선호하는 상대방 정보 ===========
   @Column(name = "favorite_age")
   private String favoriteAge;
@@ -182,6 +203,9 @@ public class BlindDate extends BaseTimeEntity {
   @Column(name = "favorite_location_important")
   private Boolean favoriteLocationImportant;
 
+  @Column(name = "favorite_location_desc")
+  private String favoriteLocationDesc;
+
   public static BlindDate of(Integer season, Account account) {
     return builder()
       // =========== 메타 정보 ===========
@@ -217,9 +241,11 @@ public class BlindDate extends BaseTimeEntity {
     this.name = request.getName();
     this.gender = request.getGender();
     this.myAge = request.getMyAge();
+    this.myAgeStr = request.getMyAgeStr();
     this.myHeight = request.getMyHeight();
     this.myDrink = request.getMyDrink();
     this.myLocation = request.getMyLocation();
+    this.myLocationSub = request.getMyLocationSub();
     this.myLocationDesc = request.getMyLocationDesc();
     this.hobby = request.getHobby();
     this.hobbyDesc = request.getHobbyDesc();
@@ -235,6 +261,11 @@ public class BlindDate extends BaseTimeEntity {
     this.department = request.getDepartment();
     this.myJob = request.getMyJob();
     this.myJobDesc = request.getMyJobDesc();
+    this.holidayType = request.getHolidayType();
+    this.conflictSolving = request.getConflictSolving();
+    this.myDreamGoal = request.getMyDreamGoal();
+    this.myPreference = request.getMyPreference();
+    this.loveView = request.getLoveView();
 
     // =========== 선호하는 상대방 정보 ===========
     this.favoriteAge = request.getFavoriteAge();
@@ -249,6 +280,7 @@ public class BlindDate extends BaseTimeEntity {
     this.favoriteFaithImportant = request.getFavoriteFaithImportant();
     this.favoriteLocation = request.getFavoriteLocation();
     this.favoriteLocationImportant = request.getFavoriteLocationImportant();
+    this.favoriteLocationDesc = request.getFavoriteLocationDesc();
   }
 
   public void updateBlindDateByRematch(ReMatchRequestDTO request) {
@@ -265,6 +297,4 @@ public class BlindDate extends BaseTimeEntity {
     this.favoriteLocation = request.getFavoriteLocation();
     this.favoriteLocationImportant = request.getFavoriteLocationImportant();
   }
-
-
 }

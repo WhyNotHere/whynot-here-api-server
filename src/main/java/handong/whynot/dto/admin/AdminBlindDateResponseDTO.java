@@ -24,9 +24,11 @@ public class AdminBlindDateResponseDTO {
   private String name;
   private String gender;
   private Integer myAge;
+  private String myAgeStr;
   private Integer myHeight;
   private String myDrink;
   private String myLocation;
+  private String myLocationSub;
   private String myLocationDesc;
   private String hobby;
   private String hobbyDesc;
@@ -44,6 +46,11 @@ public class AdminBlindDateResponseDTO {
   private String department;
   private String myJob;
   private String myJobDesc;
+  private String holidayType;
+  private String conflictSolving;
+  private String myDreamGoal;
+  private String myPreference;
+  private String loveView;
 
   // =========== 선호하는 상대방 정보 ===========
   private String favoriteAge;
@@ -59,6 +66,7 @@ public class AdminBlindDateResponseDTO {
   private String favoriteLocation;
   private Boolean favoriteLocationImportant;
   private List<Long> baseMatching;
+  private String favoriteLocationDesc;
 
   public static AdminBlindDateResponseDTO of(BlindDate blindDate) {
     return builder()

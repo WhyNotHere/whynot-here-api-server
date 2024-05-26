@@ -20,10 +20,12 @@ public class BlindDateRequestDTO {
   // =========== 내 정보 ===========
   private String name;
   private String gender;
-  private Integer myAge;
+  private Integer myAge;      // 졸업생 시즌1 까지 사용
+  private String myAgeStr;    // 그 이후 현재 사용 (ex. 00년생)
   private Integer myHeight;
   private String myDrink;
   private String myLocation;
+  private String myLocationSub;
   private String myLocationDesc;
   private String hobby;
   private String hobbyDesc;
@@ -41,6 +43,11 @@ public class BlindDateRequestDTO {
   private String department;
   private String myJob;
   private String myJobDesc;
+  private String holidayType;
+  private String conflictSolving;
+  private String myDreamGoal;
+  private String myPreference;
+  private String loveView;
 
   // =========== 선호하는 상대방 정보 ===========
   private String favoriteAge;
@@ -55,4 +62,5 @@ public class BlindDateRequestDTO {
   private Boolean favoriteFaithImportant;
   private String favoriteLocation;
   private Boolean favoriteLocationImportant;
+  private String favoriteLocationDesc;
 }

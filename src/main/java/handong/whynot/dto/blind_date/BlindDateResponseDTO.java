@@ -20,9 +20,11 @@ public class BlindDateResponseDTO {
   private String name;
   private String gender;
   private Integer myAge;
+  private String myAgeStr;
   private Integer myHeight;
   private String myDrink;
   private String myLocation;
+  private String myLocationSub;
   private String myLocationDesc;
   private String myJob;
   private String myJobDesc;
@@ -40,6 +42,11 @@ public class BlindDateResponseDTO {
   private String department;
   private List<String> imageLinks;
   private List<ExcludeCondResponseDTO> excludeCondList;
+  private String holidayType;
+  private String conflictSolving;
+  private String myDreamGoal;
+  private String myPreference;
+  private String loveView;
 
   // =========== 선호하는 상대방 정보 ===========
   private String favoriteAge;
@@ -54,6 +61,7 @@ public class BlindDateResponseDTO {
   private Boolean favoriteFaithImportant;
   private String favoriteLocation;
   private Boolean favoriteLocationImportant;
+  private String favoriteLocationDesc;
 
   public static BlindDateResponseDTO of(BlindDate blindDate) {
     return builder()
@@ -64,9 +72,11 @@ public class BlindDateResponseDTO {
       .name(blindDate.getName())
       .gender(blindDate.getGender())
       .myAge(blindDate.getMyAge())
+            .myAgeStr(blindDate.getMyAgeStr())
       .myHeight(blindDate.getMyHeight())
       .myDrink(blindDate.getMyDrink())
       .myLocation(blindDate.getMyLocation())
+            .myLocationSub(blindDate.getMyLocationSub())
       .myLocationDesc(blindDate.getMyLocationDesc())
       .myJob(blindDate.getMyJob())
       .myJobDesc(blindDate.getMyJobDesc())
@@ -82,6 +92,11 @@ public class BlindDateResponseDTO {
       .commentForAdmin(blindDate.getCommentForAdmin())
       .kakaoLink(blindDate.getKakaoLink())
       .department(blindDate.getDepartment())
+            .holidayType(blindDate.getHolidayType())
+            .conflictSolving(blindDate.getConflictSolving())
+            .myDreamGoal(blindDate.getMyDreamGoal())
+            .myPreference(blindDate.getMyPreference())
+            .loveView(blindDate.getLoveView())
       // =========== 선호하는 상대방 정보 ===========
       .favoriteAge(blindDate.getFavoriteAge())
       .favoriteAgeImportant(blindDate.getFavoriteAgeImportant())
@@ -95,6 +110,7 @@ public class BlindDateResponseDTO {
       .favoriteFaithImportant(blindDate.getFavoriteFaithImportant())
       .favoriteLocation(blindDate.getFavoriteLocation())
       .favoriteLocationImportant(blindDate.getFavoriteLocationImportant())
+            .favoriteLocationDesc(blindDate.getFavoriteLocationDesc())
       .build();
   }
 }

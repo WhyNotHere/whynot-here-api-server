@@ -256,4 +256,16 @@ public class BlindDateController {
 
     return blindDateService.getIsReportMannersBySeason(account, season);
   }
+
+  @Operation(summary = "공지 한 줄 멘트 조회")
+  @GetMapping("/notice-comment")
+  public String getNoticeComment() {
+    return blindDateService.getNoticeComment();
+  }
+
+  @Operation(summary = "실시간 정보 조회")
+  @GetMapping("/real-data")
+  public RealDataResponseDTO getRealData(@RequestParam Integer season) {
+    return blindDateService.getRealData(season);
+  }
 }
