@@ -1,6 +1,7 @@
 package handong.whynot.service;
 
 import handong.whynot.domain.NoticeComment;
+import handong.whynot.dto.blind_date.NoticeCommentResponseDTO;
 import handong.whynot.repository.NoticeCommentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,13 +16,16 @@ public class NoticeCommentService {
 
     private final NoticeCommentRepository noticeCommentRepository;
 
-    public String getOneComment() {
+    public NoticeComment getLatestComment() {
         return noticeCommentRepository.findTopByOrderByCreatedDtDesc()
-                .orElseGet(() -> NoticeComment.builder().title("").build())
-                .getTitle();
+                .orElseGet(() -> NoticeComment.builder().title("").build());
     }
 
     public List<NoticeComment> getComments() {
         return noticeCommentRepository.findAllByOrderByCreatedDtDesc();
+    }
+
+    public NoticeComment getCommentById(Long id) {
+        return noticeCommentRepository.findById(id).orElse(null);
     }
 }

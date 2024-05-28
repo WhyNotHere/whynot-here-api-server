@@ -265,8 +265,8 @@ public class BlindDateController {
 
   @Operation(summary = "공지 한 줄 멘트 조회")
   @GetMapping("/notice-one-comment")
-  public String getNoticeOneComment() {
-    return noticeCommentService.getOneComment();
+  public NoticeCommentResponseDTO getNoticeOneComment() {
+    return NoticeCommentResponseDTO.of(noticeCommentService.getLatestComment());
   }
 
   @Operation(summary = "실시간 정보 조회")
@@ -282,5 +282,12 @@ public class BlindDateController {
     return noticeCommentService.getComments().stream()
             .map(NoticeCommentResponseDTO::of)
             .collect(Collectors.toList());
+  }
+
+  @Operation(summary = "공지 단건 조회")
+  @GetMapping("/notice-comment/{id}")
+  public NoticeCommentResponseDTO getNoticeComment(@PathVariable Long id) {
+
+    return NoticeCommentResponseDTO.of(noticeCommentService.getCommentById(id));
   }
 }

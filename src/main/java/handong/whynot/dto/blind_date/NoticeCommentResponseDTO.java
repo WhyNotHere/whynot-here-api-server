@@ -17,6 +17,7 @@ public class NoticeCommentResponseDTO {
 
     private static final String DATE_PATTERN = "yyyy-MM-dd HH:mm";
 
+    private Long id;
     private String title;
     private String content;
     private String imgLink;
@@ -28,6 +29,7 @@ public class NoticeCommentResponseDTO {
 
     public static NoticeCommentResponseDTO of(NoticeComment comment) {
         return builder()
+                .id(comment.getId())
                 .title(comment.getTitle())
                 .content(comment.getContent())
                 .imgLink(comment.getImgLink())
