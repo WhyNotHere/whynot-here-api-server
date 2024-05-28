@@ -689,12 +689,6 @@ public class BlindDateService {
       .build();
   }
 
-  public String getNoticeComment() {
-    NoticeComment comment = noticeCommentRepository.findFirstByOrderByIdDesc()
-            .orElseGet(() -> NoticeComment.builder().description("").build());
-    return comment.getDescription();
-  }
-
   public RealDataResponseDTO getRealData(Integer season) {
 
     List<BlindDate> blindDateList = blindDateRepository.findAllBySeason(season).stream()

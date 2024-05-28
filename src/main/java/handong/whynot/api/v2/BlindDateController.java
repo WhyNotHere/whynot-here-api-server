@@ -2,14 +2,19 @@ package handong.whynot.api.v2;
 
 import handong.whynot.domain.Account;
 import handong.whynot.domain.BlindDateSummary;
+import handong.whynot.domain.NoticeComment;
 import handong.whynot.dto.blind_date.*;
 import handong.whynot.dto.blind_date.enums.GBlindDateState;
 import handong.whynot.dto.common.ResponseDTO;
 import handong.whynot.service.AccountService;
 import handong.whynot.service.BlindDateService;
+import handong.whynot.service.NoticeCommentService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -20,6 +25,7 @@ public class BlindDateController {
 
   private final BlindDateService blindDateService;
   private final AccountService accountService;
+  private final NoticeCommentService noticeCommentService;
 
   @Operation(summary = "[졸업생] 소개팅 지원 (약관동의)")
   @PostMapping("")
@@ -258,14 +264,30 @@ public class BlindDateController {
   }
 
   @Operation(summary = "공지 한 줄 멘트 조회")
-  @GetMapping("/notice-comment")
-  public String getNoticeComment() {
-    return blindDateService.getNoticeComment();
+  @GetMapping("/notice-one-comment")
+  public NoticeCommentResponseDTO getNoticeOneComment() {
+    return NoticeCommentResponseDTO.of(noticeCommentService.getLatestComment());
   }
 
   @Operation(summary = "실시간 정보 조회")
   @GetMapping("/real-data")
   public RealDataResponseDTO getRealData(@RequestParam Integer season) {
     return blindDateService.getRealData(season);
+  }
+
+  @Operation(summary = "공지 조회")
+  @GetMapping("/notice-comment")
+  public List<NoticeCommentResponseDTO> getNoticeComments() {
+
+    return noticeCommentService.getComments().stream()
+            .map(NoticeCommentResponseDTO::of)
+            .collect(Collectors.toList());
+  }
+
+  @Operation(summary = "공지 단건 조회")
+  @GetMapping("/notice-comment/{id}")
+  public NoticeCommentResponseDTO getNoticeComment(@PathVariable Long id) {
+
+    return NoticeCommentResponseDTO.of(noticeCommentService.getCommentById(id));
   }
 }
