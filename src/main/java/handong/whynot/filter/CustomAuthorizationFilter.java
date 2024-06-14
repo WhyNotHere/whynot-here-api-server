@@ -68,6 +68,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
             // 만료된 토큰인 경우
             throw new AccountTokenExpiredException(AccountResponseCode.ACCOUNT_TOKEN_EXPIRED);
         } catch (Exception e) {
+            log.error(e.getMessage());
             // 비정상 토큰인 경우
             throw new AccountNotVerifiedException(AccountResponseCode.ACCOUNT_FORBIDDEN);
         }

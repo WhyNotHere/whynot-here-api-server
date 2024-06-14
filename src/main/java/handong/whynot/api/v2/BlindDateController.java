@@ -290,4 +290,13 @@ public class BlindDateController {
 
     return NoticeCommentResponseDTO.of(noticeCommentService.getCommentById(id));
   }
+
+  @Operation(summary = "신청 내역 조회")
+  @GetMapping("/history")
+  public List<HistoryResponseDTO> getHistory() {
+
+    Account account = accountService.getCurrentAccount();
+
+    return blindDateService.getHistory(account);
+  }
 }
