@@ -766,4 +766,13 @@ public class BlindDateService {
             .location(locationData)
             .build();
   }
+
+  public List<HistoryResponseDTO> getHistory(Account account) {
+    List<BlindDate> blindDateList = blindDateRepository.findAllByAccountId(account.getId());
+
+    return blindDateList.stream()
+            .filter(BlindDate::getIsPayed)
+            .map(HistoryResponseDTO::of)
+            .collect(Collectors.toList());
+  }
 }
