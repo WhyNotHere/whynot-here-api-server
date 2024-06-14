@@ -7,11 +7,13 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import handong.whynot.domain.BlindDate;
 import lombok.Builder;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Builder
+@Getter
 public class HistoryResponseDTO {
 
     private static final String DATE_PATTERN = "yyyy.MM.dd";

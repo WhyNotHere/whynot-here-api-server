@@ -773,6 +773,7 @@ public class BlindDateService {
     return blindDateList.stream()
             .filter(BlindDate::getIsPayed)
             .map(HistoryResponseDTO::of)
+            .sorted(Comparator.comparing(HistoryResponseDTO::getSeason, Comparator.reverseOrder()))
             .collect(Collectors.toList());
   }
 }
